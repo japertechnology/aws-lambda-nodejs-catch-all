@@ -1,4 +1,4 @@
-module.exports = async function handleIoTRule(event, context) {
+module.exports = async function handleIoTRule(event, _context) {
   /* IoT Rule fields:
    - event.clientId, principalId
    - event.topic

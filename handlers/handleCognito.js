@@ -1,4 +1,4 @@
-module.exports = async function handleCognito(event, context) {
+module.exports = async function handleCognito(event, _context) {
   /* Cognito Trigger fields:
    - event.triggerSource, event.userPoolId, event.userName
    - event.request, event.response

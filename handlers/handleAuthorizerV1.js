@@ -1,4 +1,4 @@
-module.exports = async function handleAuthorizerV1(event, context) {
+module.exports = async function handleAuthorizerV1(event, _context) {
   /* Authorizer v1 fields:
    - event.type === 'TOKEN'
    - event.authorizationToken

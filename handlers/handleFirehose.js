@@ -1,4 +1,4 @@
-module.exports = async function handleFirehose(event, context) {
+module.exports = async function handleFirehose(event, _context) {
   /* Firehose fields:
    - event.records[].recordId, approximateArrivalTimestamp
    - event.records[].data (Base64)

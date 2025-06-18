@@ -1,4 +1,4 @@
-module.exports = async function handleSqs(event, context) {
+module.exports = async function handleSqs(event, _context) {
   /* SQS fields:
    - event.Records[].messageId, receiptHandle, body
    - event.Records[].attributes, messageAttributes

@@ -1,4 +1,4 @@
-module.exports = async function handleKinesis(event, context) {
+module.exports = async function handleKinesis(event, _context) {
   /* Kinesis fields:
    - event.Records[].eventID, kinesis.partitionKey
    - event.Records[].kinesis.data, approximateArrivalTimestamp

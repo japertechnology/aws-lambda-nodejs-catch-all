@@ -1,4 +1,4 @@
-module.exports = async function handleLex(event, context) {
+module.exports = async function handleLex(event, _context) {
   /* Lex fields:
    - event.bot.name, alias, version
    - event.userId

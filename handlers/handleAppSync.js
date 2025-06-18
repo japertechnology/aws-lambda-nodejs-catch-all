@@ -1,4 +1,4 @@
-module.exports = async function handleAppSync(event, context) {
+module.exports = async function handleAppSync(event, _context) {
   /* AppSync fields:
    - event.arguments
    - event.identity

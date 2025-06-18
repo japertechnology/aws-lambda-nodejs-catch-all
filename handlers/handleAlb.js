@@ -1,4 +1,4 @@
-module.exports = async function handleAlb(event, context) {
+module.exports = async function handleAlb(event, _context) {
   /* ALB fields:
    - event.requestContext.elb.targetGroupArn
    - event.httpMethod, event.path, queryStringParameters

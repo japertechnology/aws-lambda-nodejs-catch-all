@@ -1,4 +1,4 @@
-module.exports = async function handleEventBridge(event, context) {
+module.exports = async function handleEventBridge(event, _context) {
   /* EventBridge fields:
    - event.version, id, 'detail-type', source
    - event.account, region, time, resources, detail

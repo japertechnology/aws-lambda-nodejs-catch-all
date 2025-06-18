@@ -1,4 +1,4 @@
-module.exports = async function handleHttpV2(event, context) {
+module.exports = async function handleHttpV2(event, _context) {
   /* API Gateway v2 fields:
    - event.version === '2.0'
    - event.requestContext.http.method, rawPath, rawQueryString

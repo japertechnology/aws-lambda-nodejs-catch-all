@@ -1,4 +1,4 @@
-module.exports = async function handleSes(event, context) {
+module.exports = async function handleSes(event, _context) {
   /* SES fields:
    - event.Records[].ses.mail.messageId, source, destination
    - event.Records[].ses.mail.commonHeaders.subject, from, to, date

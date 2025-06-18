@@ -1,4 +1,4 @@
-module.exports = async function handleAlexa(event, context) {
+module.exports = async function handleAlexa(event, _context) {
   /* Alexa fields:
    - event.session.sessionId
    - event.request.type, requestId, timestamp

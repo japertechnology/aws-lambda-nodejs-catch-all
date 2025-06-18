@@ -1,4 +1,4 @@
-module.exports = async function handleConfigRule(event, context) {
+module.exports = async function handleConfigRule(event, _context) {
   /* Config Rule fields:
    - event.invokingEvent
    - event.ruleParameters

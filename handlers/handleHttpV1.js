@@ -1,4 +1,4 @@
-module.exports = async function handleHttpV1(event, context) {
+module.exports = async function handleHttpV1(event, _context) {
   /* API Gateway v1 fields:
    - event.httpMethod, event.path, event.headers
    - event.queryStringParameters, pathParameters, stageVariables

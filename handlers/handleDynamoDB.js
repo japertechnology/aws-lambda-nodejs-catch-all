@@ -1,4 +1,4 @@
-module.exports = async function handleDynamoDB(event, context) {
+module.exports = async function handleDynamoDB(event, _context) {
   /* DynamoDB Streams fields:
    - event.Records[].eventID, eventName, awsRegion
    - event.Records[].dynamodb.Keys, NewImage, OldImage

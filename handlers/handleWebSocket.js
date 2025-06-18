@@ -1,4 +1,4 @@
-module.exports = async function handleWebSocket(event, context) {
+module.exports = async function handleWebSocket(event, _context) {
   /* WebSocket fields:
    - event.requestContext.routeKey, connectionId, domainName, stage
    - event.body

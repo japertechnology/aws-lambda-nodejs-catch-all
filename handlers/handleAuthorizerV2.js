@@ -1,4 +1,4 @@
-module.exports = async function handleAuthorizerV2(event, context) {
+module.exports = async function handleAuthorizerV2(_event, _context) {
   /* Authorizer v2 fields:
    - event.type === 'REQUEST'
    - event.routeArn, event.identitySource

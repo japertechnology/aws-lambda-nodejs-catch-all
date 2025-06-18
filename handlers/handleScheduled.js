@@ -1,4 +1,4 @@
-module.exports = async function handleScheduled(event, context) {
+module.exports = async function handleScheduled(event, _context) {
   /* Scheduled CloudWatch fields:
    - event.version, id, 'detail-type' === 'Scheduled Event'
    - event.source === 'aws.events'
