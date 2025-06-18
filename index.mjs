@@ -114,13 +114,13 @@ export async function handler(event, context) {
         default:             return await handleDefault(event, context);
       }
     }
-    // EventBridge / CloudWatch Events
-    if (event.source && event['detail-type']) {
-      return await handleEventBridge(event, context);
-    }
     // Scheduled CloudWatch event
     if (event.source === 'aws.events') {
       return await handleScheduled(event, context);
+    }
+    // EventBridge / CloudWatch Events
+    if (event.source && event['detail-type']) {
+      return await handleEventBridge(event, context);
     }
     // Fallback handler
     return await handleDefault(event, context);
