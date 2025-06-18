@@ -56,8 +56,9 @@ export async function handler(event, context) {
     if (event.invokingEvent && event.ruleParameters && event.resultToken) {
       return await handleConfigRule(event, context);
     }
-    // Step Functions (Sync Task)
-    if (event.execution && event.stateMachineArn) {
+    // Step Functions (task or callback)
+    // Check for a Step Functions context object or a waitForTaskToken payload
+    if (event.taskToken || event.source === 'aws.states') {
       return await handleStepFunctions(event, context);
     }
     // API Gateway WebSocket (HTTP API v2)
