@@ -2,13 +2,23 @@ import { logDebug } from '../logger.js';
 
 /**
  * Handle AWS Step Functions task invocations.
- * Key fields:
- *  - execution.eventId/name/input: details of the running execution
- *  - stateMachineArn: ARN of the state machine
- * See https://docs.aws.amazon.com/step-functions/latest/dg/connect-lambda.html#connect-lambda-input-output
+ *
+ * Example callback payload (waitForTaskToken):
+ * {
+ *   "taskToken": "token",
+ *   "input": { ... }
+ * }
+ *
+ * Example context object payload (Payload.$ == "$$"):
+ * {
+ *   "source": "aws.states",
+ *   "Execution": { "Input": { ... } },
+ *   "Task": { "Token": "token" }
+ * }
  */
 export default async function handleStepFunctions(event, context) {
-  logDebug('handleStepFunctions', { executionId: event.execution?.eventId, requestId: context.awsRequestId });
-  console.log('StepFunctions execution:', event.execution.name);
-  return { status: 'SUCCEEDED', output: event.execution.input };
+  logDebug('handleStepFunctions', { requestId: context.awsRequestId });
+  const input = event.input ?? event.Execution?.Input ?? event;
+  console.log('StepFunctions input:', input);
+  return { status: 'SUCCEEDED', output: input };
 }
