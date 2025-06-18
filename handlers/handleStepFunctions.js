@@ -1,4 +1,4 @@
-module.exports = async function handleStepFunctions(event, context) {
+module.exports = async function handleStepFunctions(event, _context) {
   /* Step Functions fields:
    - event.execution.eventId, name, input
    - event.stateMachineArn

@@ -1,4 +1,4 @@
-module.exports = async function handleCustomResource(event, context) {
+module.exports = async function handleCustomResource(event, _context) {
   /* CloudFormation Custom Resource fields:
    - event.RequestType, ServiceToken, ResponseURL
    - event.ResourceProperties

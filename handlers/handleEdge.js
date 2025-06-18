@@ -1,4 +1,4 @@
-module.exports = async function handleEdge(event, context) {
+module.exports = async function handleEdge(event, _context) {
   /* Lambda@Edge fields:
    - event.Records[0].cf.config.eventType, distributionId
    - event.Records[0].cf.request.uri, method, headers

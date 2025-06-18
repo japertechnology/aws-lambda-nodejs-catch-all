@@ -1,4 +1,4 @@
-module.exports = async function handleCloudWatchLogs(event, context) {
+module.exports = async function handleCloudWatchLogs(_event, _context) {
   /* CloudWatch Logs fields:
    - event.awslogs.data (Base64 gzipped payload)
   */
