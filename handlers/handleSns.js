@@ -1,9 +1,14 @@
-module.exports = async function handleSns(event, _context) {
-  /* SNS fields:
-   - event.Records[].Sns.MessageId, TopicArn, Subject, Message
-   - event.Records[].Sns.Timestamp, MessageAttributes
-  */
+import { logDebug } from '../logger.js';
+
+/**
+ * Handle Amazon SNS events.
+ * Key fields:
+ *  - Records[].Sns.MessageId, TopicArn, Subject and Message
+ *  - Records[].Sns.Timestamp and MessageAttributes
+ * See https://docs.aws.amazon.com/lambda/latest/dg/with-sns.html
+ */
+export default async function handleSns(event, context) {
+  logDebug('handleSns', { messages: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => console.log('SNS:', r.Sns.Message));
   return { processed: event.Records.length };
 }
-

@@ -1,9 +1,14 @@
-module.exports = async function handleAuthorizerV2(_event, _context) {
-  /* Authorizer v2 fields:
-   - event.type === 'REQUEST'
-   - event.routeArn, event.identitySource
-   - event.requestContext.http.method
-  */
+import { logDebug } from '../logger.js';
+
+/**
+ * Handle API Gateway HTTP API authorizers (v2).
+ * Key fields:
+ *  - type: should be 'REQUEST'
+ *  - routeArn and identitySource: request metadata
+ *  - requestContext.http.method: HTTP method of the call
+ * See https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html
+ */
+export default async function handleAuthorizerV2(event, context) {
+  logDebug('handleAuthorizerV2', { routeArn: event.routeArn, requestId: context.awsRequestId });
   return { isAuthorized: true, context: {} };
 }
-

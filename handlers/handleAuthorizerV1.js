@@ -1,9 +1,20 @@
-module.exports = async function handleAuthorizerV1(event, _context) {
-  /* Authorizer v1 fields:
-   - event.type === 'TOKEN'
-   - event.authorizationToken
-   - event.methodArn
-  */
-  return { principalId: 'user', policyDocument: { Version: '2012-10-17', Statement: [{ Action: 'execute-api:Invoke', Effect: 'Allow', Resource: event.methodArn }] } };
-}
+import { logDebug } from '../logger.js';
 
+/**
+ * Handle API Gateway custom authorizers (v1).
+ * Key fields:
+ *  - type: should be 'TOKEN'
+ *  - authorizationToken: bearer token from the client
+ *  - methodArn: ARN of the API method being called
+ * See https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
+ */
+export default async function handleAuthorizerV1(event, context) {
+  logDebug('handleAuthorizerV1', { methodArn: event.methodArn, requestId: context.awsRequestId });
+  return {
+    principalId: 'user',
+    policyDocument: {
+      Version: '2012-10-17',
+      Statement: [{ Action: 'execute-api:Invoke', Effect: 'Allow', Resource: event.methodArn }],
+    },
+  };
+}

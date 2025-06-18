@@ -1,11 +1,18 @@
-module.exports = async function handleAlexa(event, _context) {
-  /* Alexa fields:
-   - event.session.sessionId
-   - event.request.type, requestId, timestamp
-   - event.request.intent.name, event.request.intent.slots
-   - event.context.System.device.deviceId, apiEndpoint
-  */
-  console.log('Alexa request type:', event.request.type);
-  return { version: '1.0', response: { outputSpeech: { type: 'PlainText', text: 'Hello from Alexa!' } } };
-}
+import { logDebug } from '../logger.js';
 
+/**
+ * Handle Alexa Skills Kit requests.
+ * Key fields:
+ *  - session.sessionId: unique session identifier
+ *  - request.type: type such as IntentRequest
+ *  - request.intent.name and slots: invoked intent details
+ *  - context.System.device.deviceId: device identifier
+ * See https://developer.amazon.com/en-US/docs/alexa/custom-skills/request-and-response-json-reference.html
+ */
+export default async function handleAlexa(event, context) {
+  logDebug('handleAlexa', { sessionId: event.session?.sessionId, requestType: event.request?.type, awsRequestId: context.awsRequestId });
+  return {
+    version: '1.0',
+    response: { outputSpeech: { type: 'PlainText', text: 'Hello from Alexa!' } },
+  };
+}

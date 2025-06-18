@@ -1,9 +1,14 @@
-module.exports = async function handleS3(event, _context) {
-  /* S3 fields:
-   - event.Records[].s3.bucket.name, arn
-   - event.Records[].s3.object.key, size, eTag
-  */
+import { logDebug } from '../logger.js';
+
+/**
+ * Handle Amazon S3 events.
+ * Key fields:
+ *  - Records[].s3.bucket.name and arn
+ *  - Records[].s3.object.key, size and eTag
+ * See https://docs.aws.amazon.com/lambda/latest/dg/with-s3.html
+ */
+export default async function handleS3(event, context) {
+  logDebug('handleS3', { records: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => console.log('S3:', r.s3.bucket.name, r.s3.object.key));
   return { processed: event.Records.length };
 }
-
