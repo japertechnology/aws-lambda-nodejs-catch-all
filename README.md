@@ -99,8 +99,7 @@ EventBridge event:
 
 ## Testing
 
-The repository does not yet include automated tests. After adding tests,
-run them with:
+Run the unit tests with:
 
 ```bash
 npm test
