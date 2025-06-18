@@ -1,0 +1,21 @@
+{
+  "name": "aws-lambda-nodejs-handler",
+  "version": "1.0.0",
+  "description": "This is a handler for all AWS Lambda invocations.",
+  "main": "index.mjs",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "npm run lint",
+    "package": "npm pack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "eslint": "^9.29.0"
+  }
+}
