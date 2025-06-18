@@ -1,9 +1,18 @@
-module.exports = async function handleHttpV1(event, _context) {
-  /* API Gateway v1 fields:
-   - event.httpMethod, event.path, event.headers
-   - event.queryStringParameters, pathParameters, stageVariables
-   - event.requestContext, event.body, event.isBase64Encoded
-  */
-  return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'Hello from API Gateway v1', event }) };
-}
+import { logDebug } from '../logger.js';
 
+/**
+ * Handle API Gateway REST API (v1) requests.
+ * Key fields:
+ *  - httpMethod and path: describe the HTTP request
+ *  - headers, queryStringParameters, pathParameters
+ *  - requestContext and body
+ * See https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html
+ */
+export default async function handleHttpV1(event, context) {
+  logDebug('handleHttpV1', { method: event.httpMethod, path: event.path, requestId: context.awsRequestId });
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'Hello from API Gateway v1', event }),
+  };
+}

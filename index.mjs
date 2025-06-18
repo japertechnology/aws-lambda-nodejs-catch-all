@@ -1,6 +1,7 @@
 /**
  * Universal AWS Lambda handler.
  */
+import { logDebug } from './logger.js';
 import handleAlexa from './handlers/handleAlexa.js';
 import handleLex from './handlers/handleLex.js';
 import handleAppSync from './handlers/handleAppSync.js';
@@ -29,6 +30,7 @@ import handleScheduled from './handlers/handleScheduled.js';
 import handleDefault from './handlers/handleDefault.js';
 
 export async function handler(event, context) {
+  logDebug('dispatcher', { requestId: context.awsRequestId });
   try {
     // Alexa Skills Kit (Custom Skill)
     if (event.request && event.session && event.context?.System) {

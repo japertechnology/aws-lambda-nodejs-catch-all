@@ -1,9 +1,18 @@
-module.exports = async function handleHttpV2(event, _context) {
-  /* API Gateway v2 fields:
-   - event.version === '2.0'
-   - event.requestContext.http.method, rawPath, rawQueryString
-   - event.headers, event.queryStringParameters, event.body
-  */
-  return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'Hello from API Gateway v2', event }) };
-}
+import { logDebug } from '../logger.js';
 
+/**
+ * Handle API Gateway HTTP API (v2) requests.
+ * Key fields:
+ *  - version === '2.0'
+ *  - requestContext.http.method, rawPath and rawQueryString
+ *  - headers, queryStringParameters and body
+ * See https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html
+ */
+export default async function handleHttpV2(event, context) {
+  logDebug('handleHttpV2', { method: event.requestContext?.http?.method, path: event.rawPath, requestId: context.awsRequestId });
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'Hello from API Gateway v2', event }),
+  };
+}
