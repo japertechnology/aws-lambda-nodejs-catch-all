@@ -1,9 +1,5 @@
 /**
- * Universal AWS Lambda handler supporting multiple invocation sources,
- * including Alexa, Lex, AppSync, IoT Rules, Kinesis Firehose,
- * AWS Config Rules, Step Functions, SES, WebSocket, API Gateway
- * Custom Authorizers, CloudWatch Logs, CloudFormation Custom Resources,
- * and Cognito Triggers.
+ * Universal AWS Lambda handler.
  */
 const handleAlexa = require('./handlers/handleAlexa');
 const handleLex = require('./handlers/handleLex');
