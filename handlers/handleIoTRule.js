@@ -11,7 +11,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/services-iot.html
  */
 export default async function handleIoTRule(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'ioTRule');
   logDebug('invocation', invocation);
   logDebug('handleIoTRule', { topic: event.topic, requestId: context.awsRequestId });
   console.log('IoT topic:', event.topic);

@@ -10,7 +10,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html#request-body
  */
 export default async function handleAlb(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'alb');
   logDebug('invocation', invocation);
   logDebug('handleAlb', { method: event.httpMethod, path: event.path, requestId: context.awsRequestId });
   return {

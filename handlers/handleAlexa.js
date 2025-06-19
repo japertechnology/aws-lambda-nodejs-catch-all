@@ -11,7 +11,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://developer.amazon.com/en-US/docs/alexa/custom-skills/request-and-response-json-reference.html
  */
 export default async function handleAlexa(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'alexa');
   logDebug('invocation', invocation);
   logDebug('handleAlexa', { sessionId: event.session?.sessionId, requestType: event.request?.type, awsRequestId: context.awsRequestId });
   return {

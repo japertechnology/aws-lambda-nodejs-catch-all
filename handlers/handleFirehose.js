@@ -10,7 +10,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/firehose/latest/dev/data-transformation.html#lambda-transformation-event
  */
 export default async function handleFirehose(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'firehose');
   logDebug('invocation', invocation);
   logDebug('handleFirehose', { count: event.records?.length, requestId: context.awsRequestId });
   const output = event.records.map(r => ({ recordId: r.recordId, result: 'Ok', data: r.data }));

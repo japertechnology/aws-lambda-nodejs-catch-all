@@ -18,7 +18,7 @@ import collectInvocation from '../collectInvocation.js';
  * }
  */
 export default async function handleStepFunctions(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'stepFunctions');
   logDebug('invocation', invocation);
   logDebug('handleStepFunctions', { requestId: context.awsRequestId });
   const input = event.input ?? event.Execution?.Input ?? event;

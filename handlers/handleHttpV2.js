@@ -10,7 +10,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html
  */
 export default async function handleHttpV2(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'httpV2');
   logDebug('invocation', invocation);
   logDebug('handleHttpV2', { method: event.requestContext?.http?.method, path: event.rawPath, requestId: context.awsRequestId });
   return {

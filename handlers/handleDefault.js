@@ -9,7 +9,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/nodejs-context.html
  */
 export default async function handleDefault(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'default');
   logDebug('invocation', invocation);
   logDebug('handleDefault', { requestId: context.awsRequestId });
   console.warn('Unhandled event type');

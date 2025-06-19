@@ -12,7 +12,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lex/latest/dg/lambda-input-response-format.html
  */
 export default async function handleLex(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'lex');
   logDebug('invocation', invocation);
   logDebug('handleLex', { intent: event.currentIntent?.name, requestId: context.awsRequestId });
   return {

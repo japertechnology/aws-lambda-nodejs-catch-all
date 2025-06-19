@@ -9,7 +9,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html
  */
 export default async function handleKinesis(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'kinesis');
   logDebug('invocation', invocation);
   logDebug('handleKinesis', { records: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => {

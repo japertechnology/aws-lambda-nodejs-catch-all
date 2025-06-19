@@ -10,7 +10,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/ses/latest/dg/receiving-email-action-lambda.html
  */
 export default async function handleSes(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'ses');
   logDebug('invocation', invocation);
   logDebug('handleSes', { messages: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => {

@@ -9,7 +9,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-lambda.html
  */
 export default async function handleEventBridge(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'eventBridge');
   logDebug('invocation', invocation);
   logDebug('handleEventBridge', { detailType: event['detail-type'], requestId: context.awsRequestId });
   console.log('EventBridge event:', event['detail-type']);

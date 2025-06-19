@@ -9,7 +9,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-sns.html
  */
 export default async function handleSns(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'sns');
   logDebug('invocation', invocation);
   logDebug('handleSns', { messages: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => console.log('SNS:', r.Sns.Message));
