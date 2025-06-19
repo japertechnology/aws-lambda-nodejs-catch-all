@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle EventBridge events.
@@ -8,6 +9,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-lambda.html
  */
 export default async function handleEventBridge(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleEventBridge', { detailType: event['detail-type'], requestId: context.awsRequestId });
   console.log('EventBridge event:', event['detail-type']);
   return { processed: true };

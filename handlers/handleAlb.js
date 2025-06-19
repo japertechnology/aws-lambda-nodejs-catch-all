@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Application Load Balancer requests.
@@ -9,6 +10,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html#request-body
  */
 export default async function handleAlb(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleAlb', { method: event.httpMethod, path: event.path, requestId: context.awsRequestId });
   return {
     statusCode: 200,

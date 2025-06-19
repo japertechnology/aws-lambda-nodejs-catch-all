@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle scheduled CloudWatch events.
@@ -9,6 +10,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents.html
  */
 export default async function handleScheduled(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleScheduled', { time: event.time, requestId: context.awsRequestId });
   console.log('Scheduled event at:', event.time);
   return { processed: true };

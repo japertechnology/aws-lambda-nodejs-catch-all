@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle AWS Config rule evaluations.
@@ -9,6 +10,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_develop-rules_nodejs.html
  */
 export default async function handleConfigRule(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleConfigRule', { resultToken: event.resultToken, requestId: context.awsRequestId });
   console.log('Config rule invoke:', event.invokingEvent);
   return { complianceType: 'COMPLIANT', annotation: 'Default OK' };

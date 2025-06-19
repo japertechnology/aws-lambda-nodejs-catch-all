@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle API Gateway custom authorizers (v1).
@@ -9,6 +10,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
  */
 export default async function handleAuthorizerV1(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleAuthorizerV1', { methodArn: event.methodArn, requestId: context.awsRequestId });
   return {
     principalId: 'user',

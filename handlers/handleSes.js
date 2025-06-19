@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Amazon SES inbound email events.
@@ -9,6 +10,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/ses/latest/dg/receiving-email-action-lambda.html
  */
 export default async function handleSes(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleSes', { messages: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => {
     console.log('SES from:', r.ses.mail.source);
