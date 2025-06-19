@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Amazon Lex bot invocations.
@@ -11,6 +12,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/lex/latest/dg/lambda-input-response-format.html
  */
 export default async function handleLex(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleLex', { intent: event.currentIntent?.name, requestId: context.awsRequestId });
   return {
     sessionAttributes: {},

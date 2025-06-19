@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle AWS Step Functions task invocations.
@@ -17,6 +18,8 @@ import { logDebug } from '../logger.js';
  * }
  */
 export default async function handleStepFunctions(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleStepFunctions', { requestId: context.awsRequestId });
   const input = event.input ?? event.Execution?.Input ?? event;
   console.log('StepFunctions input:', input);

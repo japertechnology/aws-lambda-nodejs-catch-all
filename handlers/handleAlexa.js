@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Alexa Skills Kit requests.
@@ -10,6 +11,8 @@ import { logDebug } from '../logger.js';
  * See https://developer.amazon.com/en-US/docs/alexa/custom-skills/request-and-response-json-reference.html
  */
 export default async function handleAlexa(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleAlexa', { sessionId: event.session?.sessionId, requestType: event.request?.type, awsRequestId: context.awsRequestId });
   return {
     version: '1.0',

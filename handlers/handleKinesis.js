@@ -1,4 +1,5 @@
 import { logDebug } from '../logger.js';
+import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Kinesis stream events.
@@ -8,6 +9,8 @@ import { logDebug } from '../logger.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html
  */
 export default async function handleKinesis(event, context) {
+  const invocation = collectInvocation(event, context);
+  logDebug('invocation', invocation);
   logDebug('handleKinesis', { records: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => {
     const data = Buffer.from(r.kinesis.data, 'base64').toString('utf8');
