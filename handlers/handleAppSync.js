@@ -10,7 +10,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/appsync/latest/devguide/resolver-context-reference.html
  */
 export default async function handleAppSync(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'appSync');
   logDebug('invocation', invocation);
   logDebug('handleAppSync', { field: event.info?.fieldName, requestId: context.awsRequestId });
   console.log('AppSync field:', event.info.fieldName);

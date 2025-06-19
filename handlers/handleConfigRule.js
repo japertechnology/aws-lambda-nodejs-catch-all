@@ -10,7 +10,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_develop-rules_nodejs.html
  */
 export default async function handleConfigRule(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'configRule');
   logDebug('invocation', invocation);
   logDebug('handleConfigRule', { resultToken: event.resultToken, requestId: context.awsRequestId });
   console.log('Config rule invoke:', event.invokingEvent);

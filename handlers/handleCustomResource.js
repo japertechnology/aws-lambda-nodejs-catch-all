@@ -9,7 +9,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/crpg-ref-requests.html
  */
 export default async function handleCustomResource(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'customResource');
   logDebug('invocation', invocation);
   logDebug('handleCustomResource', { requestType: event.RequestType, requestId: context.awsRequestId });
   console.log('Custom Resource request:', event.RequestType);

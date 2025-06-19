@@ -9,7 +9,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
  */
 export default async function handleSqs(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'sqs');
   logDebug('invocation', invocation);
   logDebug('handleSqs', { messages: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => console.log('SQS:', r.body));

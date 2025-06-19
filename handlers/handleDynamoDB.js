@@ -9,7 +9,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html
  */
 export default async function handleDynamoDB(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'dynamoDB');
   logDebug('invocation', invocation);
   logDebug('handleDynamoDB', { records: event.Records?.length, requestId: context.awsRequestId });
   event.Records.forEach(r => console.log('DynamoDB:', r.dynamodb));

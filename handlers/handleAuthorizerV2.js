@@ -10,7 +10,7 @@ import collectInvocation from '../collectInvocation.js';
  * See https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html
  */
 export default async function handleAuthorizerV2(event, context) {
-  const invocation = collectInvocation(event, context);
+  const invocation = collectInvocation(event, context, 'authorizerV2');
   logDebug('invocation', invocation);
   logDebug('handleAuthorizerV2', { routeArn: event.routeArn, requestId: context.awsRequestId });
   return { isAuthorized: true, context: {} };
