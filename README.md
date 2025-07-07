@@ -6,12 +6,15 @@ handler based on the source of the invocation.
 
 ## Installation
 
-Clone the repository and install any dependencies (none are required by
-default):
+Clone the repository and install the development dependencies used for
+testing and linting:
 
 ```bash
 npm install
 ```
+
+This project requires **Node.js 18 or later**, as specified in
+`package.json`.
 
 ## Deployment
 
