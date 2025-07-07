@@ -29,100 +29,49 @@ import handleEventBridge from './handlers/handleEventBridge.js';
 import handleScheduled from './handlers/handleScheduled.js';
 import handleDefault from './handlers/handleDefault.js';
 
+function getRecordsSource(event) {
+  if (event.Records && Array.isArray(event.Records) && event.Records.length > 0) {
+    return event.Records[0].eventSource || event.Records[0].EventSource;
+  }
+  return undefined;
+}
+
+const dispatchTable = [
+  { check: e => e.request && e.session && e.context?.System, handler: handleAlexa },
+  { check: e => e.bot && e.userId && e.inputTranscript, handler: handleLex },
+  { check: e => e.arguments && e.identity && e.info, handler: handleAppSync },
+  { check: e => e.clientId && e.topic && e.payload, handler: handleIoTRule },
+  { check: e => e.records && Array.isArray(e.records) && e.records[0]?.recordId, handler: handleFirehose },
+  { check: e => e.invokingEvent && e.ruleParameters && e.resultToken, handler: handleConfigRule },
+  { check: e => e.taskToken || e.source === 'aws.states', handler: handleStepFunctions },
+  { check: e => e.version === '2.0' && e.requestContext?.routeKey && e.requestContext?.connectionId, handler: handleWebSocket },
+  { check: e => e.type === 'TOKEN' && e.methodArn, handler: handleAuthorizerV1 },
+  { check: e => e.version === '2.0' && e.type === 'REQUEST', handler: handleAuthorizerV2 },
+  { check: e => e.version === '2.0' && e.requestContext?.http?.method, handler: handleHttpV2 },
+  { check: e => e.httpMethod, handler: handleHttpV1 },
+  { check: e => e.requestContext?.elb, handler: handleAlb },
+  { check: e => e.Records && e.Records[0]?.cf, handler: handleEdge },
+  { check: e => e.awslogs?.data, handler: handleCloudWatchLogs },
+  { check: e => e.RequestType && e.ResponseURL, handler: handleCustomResource },
+  { check: e => e.triggerSource && e.userPoolId, handler: handleCognito },
+  { check: e => getRecordsSource(e) === 'aws:sqs', handler: handleSqs },
+  { check: e => getRecordsSource(e) === 'aws:sns', handler: handleSns },
+  { check: e => getRecordsSource(e) === 'aws:s3', handler: handleS3 },
+  { check: e => getRecordsSource(e) === 'aws:dynamodb', handler: handleDynamoDB },
+  { check: e => getRecordsSource(e) === 'aws:kinesis', handler: handleKinesis },
+  { check: e => getRecordsSource(e) === 'aws:ses', handler: handleSes },
+  { check: e => e.source === 'aws.events', handler: handleScheduled },
+  { check: e => e.source && e['detail-type'], handler: handleEventBridge },
+];
+
 export async function handler(event, context) {
   logDebug('dispatcher', { requestId: context.awsRequestId });
   try {
-    // Alexa Skills Kit (Custom Skill)
-    if (event.request && event.session && event.context?.System) {
-      return await handleAlexa(event, context);
-    }
-    // Lex Bot
-    if (event.bot && event.userId && event.inputTranscript) {
-      return await handleLex(event, context);
-    }
-    // AppSync (GraphQL Resolver)
-    if (event.arguments && event.identity && event.info) {
-      return await handleAppSync(event, context);
-    }
-    // IoT Rule
-    if (event.clientId && event.topic && event.payload) {
-      return await handleIoTRule(event, context);
-    }
-    // Kinesis Firehose Data Transformation
-    if (event.records && Array.isArray(event.records) && event.records[0]?.recordId) {
-      return await handleFirehose(event, context);
-    }
-    // AWS Config Rule Evaluation
-    if (event.invokingEvent && event.ruleParameters && event.resultToken) {
-      return await handleConfigRule(event, context);
-    }
-    // Step Functions (task or callback)
-    // Check for a Step Functions context object or a waitForTaskToken payload
-    if (event.taskToken || event.source === 'aws.states') {
-      return await handleStepFunctions(event, context);
-    }
-    // API Gateway WebSocket (HTTP API v2)
-    if (event.version === '2.0' && event.requestContext?.routeKey && event.requestContext?.connectionId) {
-      return await handleWebSocket(event, context);
-    }
-    // API Gateway Custom Authorizer v1
-    if (event.type === 'TOKEN' && event.methodArn) {
-      return await handleAuthorizerV1(event, context);
-    }
-    // API Gateway Custom Authorizer v2
-    if (event.version === '2.0' && event.type === 'REQUEST') {
-      return await handleAuthorizerV2(event, context);
-    }
-    // HTTP API Gateway v2 (HTTP API)
-    if (event.version === '2.0' && event.requestContext?.http?.method) {
-      return await handleHttpV2(event, context);
-    }
-    // HTTP API Gateway v1 (REST API)
-    if (event.httpMethod) {
-      return await handleHttpV1(event, context);
-    }
-    // Application Load Balancer
-    if (event.requestContext?.elb) {
-      return await handleAlb(event, context);
-    }
-    // Lambda@Edge
-    if (event.Records && event.Records[0]?.cf) {
-      return await handleEdge(event, context);
-    }
-    // CloudWatch Logs subscription
-    if (event.awslogs?.data) {
-      return await handleCloudWatchLogs(event, context);
-    }
-    // CloudFormation Custom Resource
-    if (event.RequestType && event.ResponseURL) {
-      return await handleCustomResource(event, context);
-    }
-    // Cognito User Pool Trigger
-    if (event.triggerSource && event.userPoolId) {
-      return await handleCognito(event, context);
-    }
-    // Records-based event sources (SQS, SNS, S3, DynamoDB, Kinesis, SES)
-    if (event.Records && Array.isArray(event.Records) && event.Records.length > 0) {
-      const source = event.Records[0].eventSource || event.Records[0].EventSource;
-      switch (source) {
-        case 'aws:sqs':      return await handleSqs(event, context);
-        case 'aws:sns':      return await handleSns(event, context);
-        case 'aws:s3':       return await handleS3(event, context);
-        case 'aws:dynamodb': return await handleDynamoDB(event, context);
-        case 'aws:kinesis':  return await handleKinesis(event, context);
-        case 'aws:ses':      return await handleSes(event, context);
-        default:             return await handleDefault(event, context);
+    for (const { check, handler: h } of dispatchTable) {
+      if (check(event)) {
+        return await h(event, context);
       }
     }
-    // Scheduled CloudWatch event
-    if (event.source === 'aws.events') {
-      return await handleScheduled(event, context);
-    }
-    // EventBridge / CloudWatch Events
-    if (event.source && event['detail-type']) {
-      return await handleEventBridge(event, context);
-    }
-    // Fallback handler
     return await handleDefault(event, context);
   } catch (err) {
     console.error('Error processing event', err);
