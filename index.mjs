@@ -1,5 +1,9 @@
 /**
- * Universal AWS Lambda handler.
+ * Universal AWS Lambda handler entry point.
+ *
+ * Each incoming event is inspected and dispatched to a specific
+ * handler based on its shape.  All handler implementations live
+ * under the `handlers/` directory.
  */
 import { logDebug } from './logger.js';
 import handleAlexa from './handlers/handleAlexa.js';
@@ -29,6 +33,14 @@ import handleEventBridge from './handlers/handleEventBridge.js';
 import handleScheduled from './handlers/handleScheduled.js';
 import handleDefault from './handlers/handleDefault.js';
 
+/**
+ * Extract the eventSource from the first record if the event contains
+ * a `Records` array. Some AWS services use `EventSource` instead of
+ * `eventSource`, so both are checked.
+ *
+ * @param {object} event - Incoming Lambda event.
+ * @returns {string|undefined} the source service or undefined if not present.
+ */
 function getRecordsSource(event) {
   if (event.Records && Array.isArray(event.Records) && event.Records.length > 0) {
     return event.Records[0].eventSource || event.Records[0].EventSource;
@@ -36,6 +48,9 @@ function getRecordsSource(event) {
   return undefined;
 }
 
+// Mapping of event detection functions to their corresponding handler.
+// Each `check` function returns true if the incoming event matches that
+// handler's expected structure.
 const dispatchTable = [
   { check: e => e.request && e.session && e.context?.System, handler: handleAlexa },
   { check: e => e.bot && e.userId && e.inputTranscript, handler: handleLex },
@@ -64,6 +79,14 @@ const dispatchTable = [
   { check: e => e.source && e['detail-type'], handler: handleEventBridge },
 ];
 
+/**
+ * Main Lambda entry point used by AWS.
+ *
+ * Iterates over the dispatch table and invokes the first handler whose
+ * `check` function matches the incoming event.  If no handler matches,
+ * a fallback handler is executed.  HTTP events receive a 500 response
+ * if an error is thrown.
+ */
 export async function handler(event, context) {
   logDebug('dispatcher', { requestId: context.awsRequestId });
   try {
