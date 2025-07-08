@@ -1,4 +1,5 @@
 import { handler } from '../index.mjs';
+import zlib from 'zlib';
 
 describe('handler dispatch', () => {
   test('handles Alexa event', async () => {
@@ -119,10 +120,12 @@ describe('handler dispatch', () => {
   });
 
   test('handles CloudWatch Logs event', async () => {
-    const event = { awslogs: { data: 'dGVzdA==' } };
+    const payload = { messageType: 'DATA_MESSAGE', logEvents: [ { id: '1', timestamp: 0, message: 'hi' } ] };
+    const data = zlib.gzipSync(JSON.stringify(payload)).toString('base64');
+    const event = { awslogs: { data } };
     const context = { awsRequestId: '1' };
     const result = await handler(event, context);
-    expect(result).toEqual({});
+    expect(result).toEqual(payload.logEvents);
   });
 
   test('handles Custom Resource event', async () => {
