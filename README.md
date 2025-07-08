@@ -123,3 +123,7 @@ aws lambda invoke \
   --payload '{"httpMethod":"GET","path":"/"}' output.json
 ```
 
+
+## Debugging
+
+Set `DEBUG=1` (or any non-empty value) to enable additional log output. This can help troubleshoot event dispatching and handler execution.
