@@ -13,7 +13,7 @@ testing and linting:
 npm install
 ```
 
-This project requires **Node.js 18 or later**, as specified in
+This project requires **Node.js 20 or later**, as specified in
 `package.json`.
 
 ## Deployment
@@ -24,7 +24,7 @@ Zip the contents of the repository and upload them using the AWS CLI:
 zip -r function.zip index.mjs handlers/
 aws lambda create-function \
   --function-name universal-handler \
-  --runtime nodejs18.x \
+  --runtime nodejs20.x \
   --handler index.handler \
   --zip-file fileb://function.zip \
   --role <role-arn>
