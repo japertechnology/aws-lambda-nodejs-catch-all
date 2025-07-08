@@ -3,10 +3,15 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Amazon SES inbound email events.
- * Key fields:
- *  - Records[].ses.mail.messageId, source and destination
- *  - Records[].ses.mail.commonHeaders.subject, from, to and date
- *  - Records[].ses.receipt verdicts and action
+ *
+ * Dispatch criteria: executed when `event.Records[0].eventSource` equals `'aws:ses'`.
+ *
+ * Available event fields:
+ *  - `Records[].ses.mail.messageId`, `source` and `destination`.
+ *  - `Records[].ses.mail.commonHeaders.subject`, `from`, `to` and `date`.
+ *  - `Records[].ses.receipt` verdicts and action.
+ * The Lambda `context` object is available for invocation metadata.
+ *
  * See https://docs.aws.amazon.com/ses/latest/dg/receiving-email-action-lambda.html
  */
 export default async function handleSes(event, context) {

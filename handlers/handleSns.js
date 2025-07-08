@@ -3,9 +3,14 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Amazon SNS events.
- * Key fields:
- *  - Records[].Sns.MessageId, TopicArn, Subject and Message
- *  - Records[].Sns.Timestamp and MessageAttributes
+ *
+ * Dispatch criteria: invoked when `event.Records[0].eventSource` equals `'aws:sns'`.
+ *
+ * Available event fields:
+ *  - `Records[].Sns.MessageId`, `TopicArn`, `Subject` and `Message`.
+ *  - `Records[].Sns.Timestamp` and `MessageAttributes`.
+ * The Lambda `context` object provides runtime metadata.
+ *
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-sns.html
  */
 export default async function handleSns(event, context) {

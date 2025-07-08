@@ -3,8 +3,13 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle CloudWatch Logs subscription events.
- * Key fields:
- *  - awslogs.data: Base64 gzipped log payload
+ *
+ * Dispatch criteria: this handler runs when `event.awslogs.data` is present.
+ *
+ * Available event fields:
+ *  - `awslogs.data`: Base64 gzipped log payload.
+ * The Lambda `context` object provides runtime information.
+ *
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-cloudwatch-logs.html#with-cloudwatch-logs-event
  */
 export default async function handleCloudWatchLogs(event, context) {

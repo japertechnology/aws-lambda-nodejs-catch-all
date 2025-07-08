@@ -3,10 +3,16 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Application Load Balancer requests.
- * Key fields:
- *  - requestContext.elb.targetGroupArn: target group ARN
- *  - httpMethod, path and queryStringParameters
- *  - headers, body and isBase64Encoded
+ *
+ * Dispatch criteria: the dispatcher selects this handler when
+ * `event.requestContext.elb` is defined.
+ *
+ * Available event fields:
+ *  - `requestContext.elb.targetGroupArn`: the target group ARN.
+ *  - `httpMethod`, `path` and `queryStringParameters` describe the request.
+ *  - `headers`, `body` and `isBase64Encoded` contain the payload.
+ * The standard Lambda `context` object is also provided during execution.
+ *
  * See https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html#request-body
  */
 export default async function handleAlb(event, context) {

@@ -3,10 +3,15 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle API Gateway REST API (v1) requests.
- * Key fields:
- *  - httpMethod and path: describe the HTTP request
- *  - headers, queryStringParameters, pathParameters
- *  - requestContext and body
+ *
+ * Dispatch criteria: invoked when `event.httpMethod` is present.
+ *
+ * Available event fields:
+ *  - `httpMethod` and `path` describe the HTTP request.
+ *  - `headers`, `queryStringParameters`, `pathParameters`.
+ *  - `requestContext` and `body` hold additional request details.
+ * The Lambda `context` object contains invocation metadata.
+ *
  * See https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html
  */
 export default async function handleHttpV1(event, context) {

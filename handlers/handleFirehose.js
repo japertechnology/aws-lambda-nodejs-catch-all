@@ -3,10 +3,15 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Kinesis Firehose data transformation events.
- * Key fields:
- *  - records[].recordId: identifier for each incoming record
- *  - records[].data: Base64 encoded payload
- *  - records[].approximateArrivalTimestamp: when the record arrived
+ *
+ * Dispatch criteria: selected when `event.records` is an array of Firehose records.
+ *
+ * Available event fields:
+ *  - `records[].recordId`: identifier for each incoming record.
+ *  - `records[].data`: Base64 encoded payload.
+ *  - `records[].approximateArrivalTimestamp`: when the record arrived.
+ * The standard Lambda `context` object is also provided.
+ *
  * See https://docs.aws.amazon.com/firehose/latest/dev/data-transformation.html#lambda-transformation-event
  */
 export default async function handleFirehose(event, context) {
