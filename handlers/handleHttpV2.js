@@ -3,10 +3,16 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle API Gateway HTTP API (v2) requests.
- * Key fields:
- *  - version === '2.0'
- *  - requestContext.http.method, rawPath and rawQueryString
- *  - headers, queryStringParameters and body
+ *
+ * Dispatch criteria: chosen when `event.version === '2.0'` and
+ * `event.requestContext?.http?.method` exist.
+ *
+ * Available event fields:
+ *  - `version` should be `'2.0'`.
+ *  - `requestContext.http.method`, `rawPath` and `rawQueryString` describe the request.
+ *  - `headers`, `queryStringParameters` and `body` carry client data.
+ * The Lambda `context` object is also available during execution.
+ *
  * See https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html
  */
 export default async function handleHttpV2(event, context) {

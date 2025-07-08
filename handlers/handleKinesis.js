@@ -3,9 +3,14 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Kinesis stream events.
- * Key fields:
- *  - Records[].eventID and kinesis.partitionKey
- *  - Records[].kinesis.data and approximateArrivalTimestamp
+ *
+ * Dispatch criteria: executed when `event.Records[0].eventSource` equals `'aws:kinesis'`.
+ *
+ * Available event fields:
+ *  - `Records[].eventID` and `kinesis.partitionKey` identify the record.
+ *  - `Records[].kinesis.data` and `approximateArrivalTimestamp` hold payload data.
+ * The Lambda `context` object supplies request metadata.
+ *
  * See https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html
  */
 export default async function handleKinesis(event, context) {

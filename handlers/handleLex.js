@@ -3,12 +3,17 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle Amazon Lex bot invocations.
- * Key fields:
- *  - bot.name, alias and version identify the bot
- *  - userId: user identifier for the conversation
- *  - inputTranscript: raw text from the user
- *  - currentIntent.name and slots: intent being fulfilled
- *  - invocationSource: reason for invocation
+ *
+ * Dispatch criteria: executed when `event.bot`, `event.userId` and `event.inputTranscript` exist.
+ *
+ * Available event fields:
+ *  - `bot.name`, `alias` and `version` identify the bot.
+ *  - `userId`: user identifier for the conversation.
+ *  - `inputTranscript`: raw text from the user.
+ *  - `currentIntent.name` and `slots`: intent being fulfilled.
+ *  - `invocationSource`: reason for invocation.
+ * The Lambda `context` object is available for invocation metadata.
+ *
  * See https://docs.aws.amazon.com/lex/latest/dg/lambda-input-response-format.html
  */
 export default async function handleLex(event, context) {

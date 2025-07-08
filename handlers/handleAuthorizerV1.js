@@ -3,10 +3,16 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle API Gateway custom authorizers (v1).
- * Key fields:
- *  - type: should be 'TOKEN'
- *  - authorizationToken: bearer token from the client
- *  - methodArn: ARN of the API method being called
+ *
+ * Dispatch criteria: selected when `event.type === 'TOKEN'` and
+ * `event.methodArn` are present.
+ *
+ * Available event fields:
+ *  - `type` should be `'TOKEN'`.
+ *  - `authorizationToken`: bearer token from the client.
+ *  - `methodArn`: ARN of the API method being called.
+ * The Lambda `context` object provides metadata such as `awsRequestId`.
+ *
  * See https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-use-lambda-authorizer.html
  */
 export default async function handleAuthorizerV1(event, context) {

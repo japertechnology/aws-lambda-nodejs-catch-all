@@ -3,11 +3,16 @@ import collectInvocation from '../collectInvocation.js';
 
 /**
  * Handle AWS IoT Rule triggers.
- * Key fields:
- *  - clientId and principalId: identify the client
- *  - topic: MQTT topic that triggered the rule
- *  - payload: message payload
- *  - timestamp: message timestamp
+ *
+ * Dispatch criteria: used when `event.clientId`, `event.topic` and `event.payload` exist.
+ *
+ * Available event fields:
+ *  - `clientId` and `principalId` identify the client.
+ *  - `topic`: MQTT topic that triggered the rule.
+ *  - `payload`: message payload.
+ *  - `timestamp`: message timestamp.
+ * The Lambda `context` object supplies invocation metadata.
+ *
  * See https://docs.aws.amazon.com/lambda/latest/dg/services-iot.html
  */
 export default async function handleIoTRule(event, context) {
