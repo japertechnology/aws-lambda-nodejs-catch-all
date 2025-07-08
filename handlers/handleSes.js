@@ -18,9 +18,9 @@ export default async function handleSes(event, context) {
   const invocation = collectInvocation(event, context, 'ses');
   logDebug('invocation', invocation);
   logDebug('handleSes', { messages: event.Records?.length, requestId: context.awsRequestId });
-  event.Records.forEach(r => {
+  event.Records?.forEach(r => {
     console.log('SES from:', r.ses.mail.source);
     console.log('SES subject:', r.ses.mail.commonHeaders.subject);
   });
-  return { processed: event.Records.length };
+  return { processed: event.Records?.length || 0 };
 }
