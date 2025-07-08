@@ -194,4 +194,20 @@ describe('handler dispatch', () => {
     const result = await handler(event, context);
     expect(result).toEqual({ fallback: true });
   });
+
+  test('handles Records-based events with undefined Records gracefully', async () => {
+    // Test that handlers are defensive against undefined Records
+    // This tests the fix for the bug where handlers would crash on undefined Records
+    const eventsWithUndefinedRecords = [
+      { Records: undefined },
+      { Records: null },
+    ];
+    
+    for (const event of eventsWithUndefinedRecords) {
+      const context = { awsRequestId: '1' };
+      const result = await handler(event, context);
+      // Should fall back to default handler since getRecordsSource returns undefined
+      expect(result).toEqual({ fallback: true });
+    }
+  });
 });
