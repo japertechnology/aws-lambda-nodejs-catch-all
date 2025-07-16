@@ -122,6 +122,41 @@ EventBridge event:
 }
 ```
 
+## Extending Handlers
+
+Handler modules live in the `handlers/` folder and export a single async
+function. A minimal handler looks like:
+
+```js
+export default async function handleSomething(event, context) {
+  // your logic here
+}
+```
+
+When a Lambda invocation occurs, [`index.mjs`](index.mjs) obtains the dispatch
+table and executes the first handler whose `check` function matches the event:
+
+```js
+const dispatchTable = await dispatchTablePromise;
+for (const { check, handler: h } of dispatchTable) {
+  if (check(event)) {
+    return await h(event, context);
+  }
+}
+```
+
+If no entry matches, `handleDefault.js` is called.
+
+### Adding a new handler
+
+1. Create a new file in `handlers/` exporting a default async function.
+2. Import the file in `dispatcher.js` and add it to `handlerMap`.
+3. Add a `check` entry in `dispatch-config.js` that returns `true` for your
+   event type and references the handler path.
+4. Add unit tests in `tests/` verifying the dispatch and response. Use existing
+   cases in `tests/handlers.test.js` as a guide.
+5. Run `npm test` to ensure all tests pass.
+
 ## Testing
 
 Run the unit tests with:
