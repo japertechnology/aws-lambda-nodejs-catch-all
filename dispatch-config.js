@@ -1,3 +1,11 @@
+/**
+ * Extracts the event source from the first record in the event.Records array.
+ * Handles both 'eventSource' (lowercase, standard in most AWS events) and
+ * 'EventSource' (uppercase, for backward compatibility with some AWS services).
+ *
+ * @param {Object} event - The AWS Lambda event object.
+ * @returns {string|undefined} The event source string (e.g., 'aws:s3', 'aws:sns'), or undefined if not found.
+ */
 function getRecordsSource(event) {
   if (event.Records && Array.isArray(event.Records) && event.Records.length > 0) {
     return event.Records[0].eventSource || event.Records[0].EventSource;
