@@ -63,6 +63,28 @@ The handler recognizes and dispatches events from:
 - Scheduled events
 - Fallback for other events
 
+## Custom Dispatch Configuration
+
+Handlers and event checks are listed in `dispatch-config.js`. Each entry
+contains a `check` function that inspects the incoming event and a `handler`
+module path. The dispatcher loads this file during initialization.
+
+To add your own event type:
+
+1. Create a new module under `handlers/` exporting a default async function.
+2. Add an object to `dispatch-config.js` with your detection logic and handler
+   path.
+
+Example:
+
+```js
+// dispatch-config.js
+export default [
+  // existing entries...
+  { check: e => e.myField === 'custom', handler: './handlers/handleMyEvent.js' },
+];
+```
+
 ### Example Event Payloads
 
 HTTP API v1 request:
