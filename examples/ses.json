@@ -1,0 +1,11 @@
+{
+  "Records": [
+    {
+      "eventSource": "aws:ses",
+      "ses": {
+        "mail": { "messageId": "1", "source": "a@b.com", "commonHeaders": { "subject": "Hi" } },
+        "receipt": {}
+      }
+    }
+  ]
+}

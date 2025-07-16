@@ -1,0 +1,4 @@
+{
+  "taskToken": "tok",
+  "input": { "foo": "bar" }
+}

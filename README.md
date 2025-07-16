@@ -130,6 +130,16 @@ Run the unit tests with:
 npm test
 ```
 
+## CLI Usage
+
+Invoke the handler locally with a JSON event file:
+
+```bash
+npm run invoke -- examples/http-v1.json
+```
+
+Sample payloads for all supported sources live under the `examples/` directory.
+
 ## Contributing
 
 Issues and pull requests are welcome. If adding new handlers or tests,

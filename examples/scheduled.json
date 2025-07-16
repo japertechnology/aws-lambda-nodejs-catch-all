@@ -1,0 +1,6 @@
+{
+  "source": "aws.events",
+  "id": "1",
+  "detail-type": "Scheduled Event",
+  "time": "2022-01-01T00:00:00Z"
+}

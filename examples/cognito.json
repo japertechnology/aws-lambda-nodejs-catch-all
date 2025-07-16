@@ -1,0 +1,7 @@
+{
+  "triggerSource": "PreSignUp_SignUp",
+  "userPoolId": "pool",
+  "userName": "u",
+  "request": {},
+  "response": {}
+}

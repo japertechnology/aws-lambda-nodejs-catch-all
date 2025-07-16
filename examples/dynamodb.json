@@ -1,0 +1,5 @@
+{
+  "Records": [
+    { "eventSource": "aws:dynamodb", "eventID": "1", "dynamodb": {} }
+  ]
+}

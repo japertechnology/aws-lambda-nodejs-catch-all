@@ -1,0 +1,8 @@
+{
+  "Records": [
+    {
+      "eventSource": "aws:s3",
+      "s3": { "bucket": { "name": "my-bucket" }, "object": { "key": "file.txt" } }
+    }
+  ]
+}

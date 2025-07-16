@@ -1,0 +1,10 @@
+{
+  "Records": [
+    {
+      "cf": {
+        "config": { "eventType": "viewer-request" },
+        "request": { "uri": "/index.html", "method": "GET", "headers": {} }
+      }
+    }
+  ]
+}
