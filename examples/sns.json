@@ -1,0 +1,5 @@
+{
+  "Records": [
+    { "eventSource": "aws:sns", "Sns": { "MessageId": "1", "Message": "msg" } }
+  ]
+}

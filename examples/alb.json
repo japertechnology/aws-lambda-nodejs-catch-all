@@ -1,0 +1,4 @@
+{
+  "requestContext": { "elb": {} },
+  "path": "/alb"
+}

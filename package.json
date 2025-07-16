@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "package": "npm pack"
+    "package": "npm pack",
+    "invoke": "node bin/invoke.js"
   },
   "keywords": [],
   "author": "",
