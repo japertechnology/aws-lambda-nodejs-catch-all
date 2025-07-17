@@ -1,5 +1,6 @@
 import { handler } from '../index.mjs';
 import zlib from 'zlib';
+import { jest } from '@jest/globals';
 
 describe('handler dispatch', () => {
   test('handles Alexa event', async () => {
@@ -212,5 +213,27 @@ describe('handler dispatch', () => {
       // Should fall back to default handler since getRecordsSource returns undefined
       expect(result).toEqual({ fallback: true });
     }
+  });
+
+  test('returns 500 when a handler throws for HTTP events', async () => {
+    await jest.isolateModulesAsync(async () => {
+      const failingHandler = jest.fn(() => {
+        throw new Error('boom');
+      });
+      jest.unstable_mockModule('../dispatcher.js', () => ({
+        loadDispatchTable: async () => [
+          { check: () => true, handler: failingHandler },
+        ],
+      }));
+      const { handler } = await import('../index.mjs');
+      const event = { httpMethod: 'GET', path: '/err' };
+      const context = { awsRequestId: '1' };
+      const result = await handler(event, context);
+      expect(result).toEqual({
+        statusCode: 500,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Internal Server Error' }),
+      });
+    });
   });
 });
