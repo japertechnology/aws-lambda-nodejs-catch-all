@@ -1,6 +1,6 @@
 # **AWS-LAMBDA-NODEJS-CATCH-ALL**
 
-This project implements a universal AWS Lambda entry point using Node.js. It analyzes the incoming event and dynamically routes it to the appropriate handler based on the invocation source.
+This project provides a universal AWS Lambda entry point implemented in Node.js. It inspects each incoming event and automatically routes it to the appropriate handler based on the invocation source.
 
 ## Installation
 
