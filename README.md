@@ -17,6 +17,11 @@ npm install
 This project requires **Node.js 20 or later**, as specified in
 `package.json`.
 
+
+## TypeScript
+
+Type declaration files are included for all handlers. Run `npm run build` to regenerate them after making changes.
+
 ## Deployment
 
 Zip the contents of the repository and upload them using the AWS CLI:
