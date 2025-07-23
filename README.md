@@ -194,5 +194,3 @@ aws lambda invoke \
 ## Debugging
 
 Set `DEBUG=1` (or any non-empty value) to enable additional log output. This can help troubleshoot event dispatching and handler execution.
-
-![JAPER](https://github.com/japertechnology/DEVELOPER-JAPER-IO/blob/df569f40620c4f737ecd81938f2bcf0df4760f3b/asset/images/JAPER-White.png)
