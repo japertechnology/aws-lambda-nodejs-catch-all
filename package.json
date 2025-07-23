@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "This is a handler for all AWS Lambda invocations.",
   "main": "index.mjs",
+  "bin": {
+    "invoke": "bin/invoke.js"
+  },
   "scripts": {
     "lint": "eslint .",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
