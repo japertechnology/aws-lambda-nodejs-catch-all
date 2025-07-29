@@ -26,6 +26,8 @@
   },
   "files": [
     "index.mjs",
+    "dispatcher.js",
+    "dispatch-config.js",
     "handlers",
     "logger.js",
     "collectInvocation.js",
