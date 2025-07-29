@@ -1,7 +1,6 @@
 # **AWS-LAMBDA-NODEJS-CATCH-ALL**
 
-[![CI](https://github.com/japertechnology/AWS-LAMBDA-NODEJS-CATCH-ALL/actions/workflows/node.yml/badge.svg)](https://github.com/japertechnology/AWS-LAMBDA-NODEJS-CATCH-ALL/actions/workflows/node.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![AI](https://img.shields.io/badge/Assisted-Development-2b2bff?logo=openai&logoColor=white) 
 
 This project provides a universal AWS Lambda entry point implemented in Node.js. It inspects each incoming event and automatically routes it to the appropriate handler based on the invocation source.
 
