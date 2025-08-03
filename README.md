@@ -1,4 +1,4 @@
-# **AWS-LAMBDA-NODEJS-CATCH-ALL**
+# aws-lambda-nodejs-catch-all
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![AI](https://img.shields.io/badge/Assisted-Development-2b2bff?logo=openai&logoColor=white) 
 
