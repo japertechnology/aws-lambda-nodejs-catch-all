@@ -21,4 +21,20 @@ describe('collectInvocation', () => {
       handlerType: 'test'
     });
   });
+
+  test('handles context functions that throw', () => {
+    const event = {};
+    const context = {
+      ok: () => 'good',
+      fail() { throw new Error('boom'); }
+    };
+
+    const result = collectInvocation(event, context, 'test');
+
+    expect(result).toEqual({
+      event,
+      context: { ok: 'good', fail: 'boom' },
+      handlerType: 'test'
+    });
+  });
 });
