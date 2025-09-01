@@ -265,4 +265,26 @@ describe('handler dispatch', () => {
       });
     });
   });
+
+  test('returns 500 when a handler throws for WebSocket events', async () => {
+    await jest.isolateModulesAsync(async () => {
+      const failingHandler = jest.fn(() => {
+        throw new Error('boom');
+      });
+      jest.unstable_mockModule('../dispatcher.js', () => ({
+        loadDispatchTable: async () => [
+          { check: e => e.requestContext?.routeKey, handler: failingHandler },
+        ],
+      }));
+      const { handler } = await import('../index.mjs');
+      const event = { version: '2.0', requestContext: { routeKey: '$default', connectionId: '1' } };
+      const context = { awsRequestId: '1' };
+      const result = await handler(event, context);
+      expect(result).toEqual({
+        statusCode: 500,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Internal Server Error' }),
+      });
+    });
+  });
 });
