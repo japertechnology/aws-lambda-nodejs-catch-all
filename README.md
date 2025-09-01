@@ -198,3 +198,5 @@ aws lambda invoke \
 ## Debugging
 
 Set `DEBUG=1` (or any non-empty value) to enable additional log output. This can help troubleshoot event dispatching and handler execution.
+
+When invocation data is collected, functions on the `context` object are invoked. If a context function throws an error, its message is captured and included in the logged context instead of halting execution.
