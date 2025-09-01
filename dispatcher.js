@@ -54,7 +54,11 @@ const handlerMap = {
 
 export async function loadDispatchTable() {
   const { default: config } = await import('./dispatch-config.js');
-  return config.map(({ check, handler }) => ({ check, handler: handlerMap[handler] }));
+  return config.map(({ check, handler }) => {
+    const fn = handlerMap[handler];
+    if (!fn) throw new Error(`Unknown handler path: ${handler}`);
+    return { check, handler: fn };
+  });
 }
 
 export const dispatchTablePromise = loadDispatchTable();
