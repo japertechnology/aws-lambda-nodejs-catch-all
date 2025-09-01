@@ -143,6 +143,21 @@ describe('handler dispatch', () => {
     expect(result).toEqual(payload.logEvents);
   });
 
+  test('returns empty array on malformed CloudWatch Logs data', async () => {
+    const data = Buffer.from('not gzipped').toString('base64');
+    const event = { awslogs: { data } };
+    const context = { awsRequestId: '1' };
+    const result = await handler(event, context);
+    expect(result).toEqual([]);
+  });
+
+  test('falls back to default handler on empty CloudWatch Logs data', async () => {
+    const event = { awslogs: { data: '' } };
+    const context = { awsRequestId: '1' };
+    const result = await handler(event, context);
+    expect(result).toEqual({ fallback: true });
+  });
+
   test('handles Custom Resource event', async () => {
     const event = { RequestType: 'Create', ResponseURL: 'https://example.com' };
     const context = { awsRequestId: '1' };
