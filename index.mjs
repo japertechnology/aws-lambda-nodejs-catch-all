@@ -18,8 +18,8 @@ const dispatchTablePromise = loadDispatchTable();
  *
  * Iterates over the dispatch table and invokes the first handler whose
  * `check` function matches the incoming event.  If no handler matches,
- * a fallback handler is executed.  HTTP events receive a 500 response
- * if an error is thrown.
+ * a fallback handler is executed.  HTTP or WebSocket events receive
+ * a 500 response if an error is thrown.
  */
 export async function handler(event, context) {
   logDebug('dispatcher', { requestId: context.awsRequestId });
@@ -33,8 +33,8 @@ export async function handler(event, context) {
     return await handleDefault(event, context);
   } catch (err) {
     console.error('Error processing event', err);
-    // For HTTP requests, return an error response
-    if (event.httpMethod || (event.version === '2.0' && event.requestContext?.http?.method)) {
+    // For HTTP or WebSocket requests, return an error response
+    if (event.httpMethod || (event.version === '2.0' && (event.requestContext?.http?.method || event.requestContext?.routeKey))) {
       return {
         statusCode: 500,
         headers: { 'Content-Type': 'application/json' },
