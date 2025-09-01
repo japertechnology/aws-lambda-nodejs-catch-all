@@ -120,6 +120,20 @@ describe('handler dispatch', () => {
     expect(result).toEqual(request);
   });
 
+  test('handles malformed Edge event', async () => {
+    const event = { Records: [ { cf: { config: { eventType: 'viewer-request' } } } ] };
+    const context = { awsRequestId: '1' };
+    const result = await handler(event, context);
+    expect(result).toEqual({ error: 'Invalid CloudFront event' });
+  });
+
+  test('falls back to default handler when cf missing', async () => {
+    const event = { Records: [ {} ] };
+    const context = { awsRequestId: '1' };
+    const result = await handler(event, context);
+    expect(result).toEqual({ fallback: true });
+  });
+
   test('handles CloudWatch Logs event', async () => {
     const payload = { messageType: 'DATA_MESSAGE', logEvents: [ { id: '1', timestamp: 0, message: 'hi' } ] };
     const data = zlib.gzipSync(JSON.stringify(payload)).toString('base64');
