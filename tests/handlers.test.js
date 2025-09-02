@@ -163,10 +163,13 @@ describe('handler dispatch', () => {
   });
 
   test('handles Custom Resource event', async () => {
-    const event = { RequestType: 'Create', ResponseURL: 'https://example.com' };
+    const fetchMock = jest.spyOn(global, 'fetch').mockResolvedValue({ ok: true });
+    const event = { RequestType: 'Create', ResponseURL: 'https://example.com', StackId: 's', RequestId: 'r', LogicalResourceId: 'l' };
     const context = { awsRequestId: '1' };
     const result = await handler(event, context);
-    expect(result).toEqual({});
+    expect(result).toBeUndefined();
+    expect(fetchMock).toHaveBeenCalledWith('https://example.com', expect.objectContaining({ method: 'PUT' }));
+    fetchMock.mockRestore();
   });
 
   test('handles Cognito event', async () => {
