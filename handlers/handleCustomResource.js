@@ -19,5 +19,23 @@ export default async function handleCustomResource(event, context) {
   logDebug('invocation', invocation);
   logDebug('handleCustomResource', { requestType: event.RequestType, requestId: context.awsRequestId });
   console.log('Custom Resource request:', event.RequestType);
-  return {};
+
+  if (!event.ResponseURL) {
+    throw new Error('Missing ResponseURL');
+  }
+
+  const responseBody = JSON.stringify({
+    Status: 'SUCCESS',
+    PhysicalResourceId: event.PhysicalResourceId || context.awsRequestId,
+    StackId: event.StackId,
+    RequestId: event.RequestId,
+    LogicalResourceId: event.LogicalResourceId
+  });
+
+  await fetch(event.ResponseURL, {
+    method: 'PUT',
+    body: responseBody
+  });
+
+  return;
 }
