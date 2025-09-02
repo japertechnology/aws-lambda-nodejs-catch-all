@@ -28,4 +28,14 @@ describe('handler', () => {
     const result = await handler(event, context);
     expect(result).toEqual({ processed: 1 });
   });
+
+  test('gracefully handles undefined event', async () => {
+    const context = { awsRequestId: '1' };
+    const result = await handler(undefined, context);
+    expect(result).toEqual({
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Internal Server Error' }),
+    });
+  });
 });

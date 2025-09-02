@@ -32,8 +32,13 @@ export async function handler(event, context) {
     return await handleDefault(event, context);
   } catch (err) {
     console.error('Error processing event', err);
-    // For HTTP or WebSocket requests, return an error response
-    if (event.httpMethod || (event.version === '2.0' && (event.requestContext?.http?.method || event.requestContext?.routeKey))) {
+    const isObjectEvent = typeof event === 'object' && event;
+    const isHttpOrWs =
+      isObjectEvent &&
+      (event.httpMethod ||
+        (event.version === '2.0' &&
+          (event.requestContext?.http?.method || event.requestContext?.routeKey)));
+    if (!isObjectEvent || isHttpOrWs) {
       return {
         statusCode: 500,
         headers: { 'Content-Type': 'application/json' },
