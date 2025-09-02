@@ -254,9 +254,9 @@ describe('handler dispatch', () => {
         throw new Error('boom');
       });
       jest.unstable_mockModule('../dispatcher.js', () => ({
-        loadDispatchTable: async () => [
+        dispatchTablePromise: Promise.resolve([
           { check: () => true, handler: failingHandler },
-        ],
+        ]),
       }));
       const { handler } = await import('../index.mjs');
       const event = { httpMethod: 'GET', path: '/err' };
@@ -276,9 +276,9 @@ describe('handler dispatch', () => {
         throw new Error('boom');
       });
       jest.unstable_mockModule('../dispatcher.js', () => ({
-        loadDispatchTable: async () => [
+        dispatchTablePromise: Promise.resolve([
           { check: e => e.requestContext?.routeKey, handler: failingHandler },
-        ],
+        ]),
       }));
       const { handler } = await import('../index.mjs');
       const event = { version: '2.0', requestContext: { routeKey: '$default', connectionId: '1' } };
