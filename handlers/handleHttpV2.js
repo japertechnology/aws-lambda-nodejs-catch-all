@@ -19,9 +19,10 @@ export default async function handleHttpV2(event, context) {
   const invocation = collectInvocation(event, context, 'httpV2');
   logDebug('invocation', invocation);
   logDebug('handleHttpV2', { method: event.requestContext?.http?.method, path: event.rawPath, requestId: context.awsRequestId });
+  logDebug('event', event);
   return {
     statusCode: 200,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: 'Hello from API Gateway v2', event }),
+    body: JSON.stringify({ message: 'Hello from API Gateway v2' }),
   };
 }

@@ -100,7 +100,7 @@ describe('handler dispatch', () => {
     expect(result).toEqual({
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Hello from API Gateway v2', event })
+      body: JSON.stringify({ message: 'Hello from API Gateway v2' })
     });
   });
 
@@ -112,7 +112,7 @@ describe('handler dispatch', () => {
       statusCode: 200,
       statusDescription: '200 OK',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Hello from ALB', event })
+      body: JSON.stringify({ message: 'Hello from ALB' })
     });
   });
 
