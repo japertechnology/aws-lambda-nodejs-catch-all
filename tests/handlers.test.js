@@ -105,7 +105,7 @@ describe('handler dispatch', () => {
   });
 
   test('handles ALB event', async () => {
-    const event = { requestContext: { elb: {} }, path: '/alb' };
+    const event = { requestContext: { elb: {} }, httpMethod: 'GET', path: '/alb' };
     const context = { awsRequestId: '1' };
     const result = await handler(event, context);
     expect(result).toEqual({
