@@ -41,4 +41,28 @@ describe('collectInvocation', () => {
       handlerType: 'test'
     });
   });
+
+  test('captures prototype methods', () => {
+    const event = {};
+    class ProtoCtx {
+      protoMethod() { return 'proto'; }
+      protoFail() { throw new Error('oops'); }
+    }
+    const context = new ProtoCtx();
+    context.awsRequestId = 'req-2';
+    context.own = () => 'own';
+
+    const result = collectInvocation(event, context, 'test');
+
+    expect(result).toEqual({
+      event,
+      context: {
+        awsRequestId: 'req-2',
+        own: 'own',
+        protoMethod: 'proto',
+        protoFail: 'oops'
+      },
+      handlerType: 'test'
+    });
+  });
 });
