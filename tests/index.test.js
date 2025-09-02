@@ -11,7 +11,7 @@ describe('handler', () => {
     expect(result).toEqual({
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'Hello from API Gateway v1', event })
+      body: JSON.stringify({ message: 'Hello from API Gateway v1' })
     });
   });
 

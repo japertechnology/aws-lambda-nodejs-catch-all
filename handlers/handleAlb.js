@@ -19,10 +19,11 @@ export default async function handleAlb(event, context) {
   const invocation = collectInvocation(event, context, 'alb');
   logDebug('invocation', invocation);
   logDebug('handleAlb', { method: event.httpMethod, path: event.path, requestId: context.awsRequestId });
+  logDebug('event', event);
   return {
     statusCode: 200,
     statusDescription: '200 OK',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: 'Hello from ALB', event }),
+    body: JSON.stringify({ message: 'Hello from ALB' }),
   };
 }
