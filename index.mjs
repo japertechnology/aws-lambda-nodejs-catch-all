@@ -6,12 +6,11 @@
  * under the `handlers/` directory.
  */
 import { logDebug } from './logger.js';
-import { loadDispatchTable } from './dispatcher.js';
+import { dispatchTablePromise } from './dispatcher.js';
 import handleDefault from './handlers/handleDefault.js';
 
-// Load dispatch configuration at startup. The promise resolves to an array of
-// { check, handler } objects used during event dispatch.
-const dispatchTablePromise = loadDispatchTable();
+// Dispatch configuration is loaded on module import. The promise resolves to an
+// array of { check, handler } objects used during event dispatch.
 
 /**
  * Main Lambda entry point used by AWS.
