@@ -14,7 +14,7 @@
 export default function collectInvocation(event, context, handlerType) {
   const ctx = {};
   if (context) {
-    for (const [key, value] of Object.entries(context)) {
+    const handle = (key, value) => {
       if (typeof value === 'function') {
         try {
           ctx[key] = value.call(context);
@@ -23,6 +23,20 @@ export default function collectInvocation(event, context, handlerType) {
         }
       } else {
         ctx[key] = value;
+      }
+    };
+
+    for (const [key, value] of Object.entries(context)) {
+      handle(key, value);
+    }
+
+    const proto = Object.getPrototypeOf(context);
+    if (proto && proto !== Object.prototype) {
+      for (const key of Reflect.ownKeys(proto)) {
+        if (key === 'constructor' || Object.prototype.hasOwnProperty.call(ctx, key)) {
+          continue;
+        }
+        handle(key, context[key]);
       }
     }
   }
