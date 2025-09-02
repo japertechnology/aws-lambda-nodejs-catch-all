@@ -1,3 +1,7 @@
+/**
+ * Tests for the dispatch table loader ensuring unknown handler paths trigger
+ * appropriate errors.
+ */
 import config from '../dispatch-config.js';
 import { loadDispatchTable } from '../dispatcher.js';
 

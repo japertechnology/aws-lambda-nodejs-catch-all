@@ -1,3 +1,8 @@
+/**
+ * Load and map all available event handlers used by the universal Lambda
+ * dispatcher.  Handlers are imported eagerly so that their references can be
+ * resolved when building the dispatch table.
+ */
 import handleAlexa from './handlers/handleAlexa.js';
 import handleLex from './handlers/handleLex.js';
 import handleAppSync from './handlers/handleAppSync.js';
@@ -24,6 +29,10 @@ import handleSes from './handlers/handleSes.js';
 import handleEventBridge from './handlers/handleEventBridge.js';
 import handleScheduled from './handlers/handleScheduled.js';
 
+/**
+ * Mapping of handler module paths to the concrete handler implementations.
+ * The keys correspond to the `handler` values declared in dispatch-config.js.
+ */
 const handlerMap = {
   './handlers/handleAlexa.js': handleAlexa,
   './handlers/handleLex.js': handleLex,
@@ -52,6 +61,12 @@ const handlerMap = {
   './handlers/handleScheduled.js': handleScheduled,
 };
 
+/**
+ * Resolve the dispatch configuration into executable handler functions.
+ *
+ * @returns {Promise<Array<{check: Function, handler: Function}>>} The dispatch
+ * table, preserving the order defined in the configuration file.
+ */
 export async function loadDispatchTable() {
   const { default: config } = await import('./dispatch-config.js');
   return config.map(({ check, handler }) => {
@@ -61,4 +76,8 @@ export async function loadDispatchTable() {
   });
 }
 
+/**
+ * Promise that resolves to the dispatch table.  Loading is initiated on module
+ * import so the table is available by the time the Lambda handler runs.
+ */
 export const dispatchTablePromise = loadDispatchTable();

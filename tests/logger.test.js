@@ -1,3 +1,7 @@
+/**
+ * Tests validating the debug logger's behavior and resilience to problematic
+ * payloads such as circular references.
+ */
 import { logDebug } from '../logger.js';
 
 describe('logDebug', () => {

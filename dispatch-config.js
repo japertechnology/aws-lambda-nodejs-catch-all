@@ -13,6 +13,12 @@ function getRecordsSource(event) {
   return undefined;
 }
 
+/**
+ * Ordered dispatch rules evaluated by the main handler.  Each rule provides a
+ * `check` predicate to determine if an incoming event matches and the path to
+ * the handler module responsible for processing that event type.  Rules are
+ * evaluated sequentially until a match is found.
+ */
 export default [
   { check: e => e.request && e.session && e.context?.System, handler: './handlers/handleAlexa.js' },
   { check: e => e.bot && e.userId && e.inputTranscript, handler: './handlers/handleLex.js' },

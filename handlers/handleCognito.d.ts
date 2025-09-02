@@ -1,5 +1,9 @@
+/**
+ * Type definitions for the handleCognito handler.
+ */
 import type { LambdaHandler } from '../index.d.ts';
 import type { Context } from 'aws-lambda';
 
+/** handleCognito handler. */
 declare const handleCognito: LambdaHandler;
 export default handleCognito;
