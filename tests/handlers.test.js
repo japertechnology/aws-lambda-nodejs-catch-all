@@ -1,3 +1,7 @@
+/**
+ * Integration tests exercising the universal handler against representative
+ * events for each supported AWS service.
+ */
 import { handler } from '../index.mjs';
 import zlib from 'zlib';
 import { jest } from '@jest/globals';

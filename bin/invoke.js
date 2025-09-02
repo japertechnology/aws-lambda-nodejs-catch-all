@@ -1,8 +1,16 @@
 #!/usr/bin/env node
+/**
+ * Command-line utility for invoking the universal Lambda handler with a JSON
+ * event payload.  Useful for local testing and debugging.
+ */
 import fs from 'fs/promises';
 import path from 'path';
 import { handler } from '../index.mjs';
 
+/**
+ * Read an event from disk and invoke the handler, printing the result to
+ * stdout.  Exits the process with a non-zero code on failure.
+ */
 async function main() {
   const file = process.argv[2];
   if (!file) {

@@ -1,3 +1,7 @@
+/**
+ * Unit tests for the `collectInvocation` helper, verifying that context
+ * functions are executed and errors handled gracefully.
+ */
 import collectInvocation from '../collectInvocation.js';
 
 describe('collectInvocation', () => {

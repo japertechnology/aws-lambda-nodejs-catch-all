@@ -1,3 +1,6 @@
+/**
+ * Smoke tests ensuring the primary handler routes common events correctly.
+ */
 import { handler } from '../index.mjs';
 
 describe('handler', () => {
